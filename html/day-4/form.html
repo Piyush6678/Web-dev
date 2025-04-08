@@ -9,7 +9,15 @@
     <br> roll no.
     <input type="number">
     <br>password
-    <!-- palceholder -->
+<!-- check box -->
+ <label for="age">i am 18+</label>
+ <input type="checkbox" checked id="age" name="age">
+   <!--radio  -->
+   <label for="female">female</label>
+   <label for="male">male</label>
+   <input type="text"  value="female" name="gender" type="radio" id="female" >
+   <input type="text"  value="male" name="gender" type="radio" id="male" >
+ <!-- palceholder -->
     <input placeholder="password" type="password">
     <input type="text" placeholder="username">
     
@@ -28,5 +36,33 @@
 
 <!-- button -->
 <button>submit</button>
-     
+<button type="reset">reset</button>
+     <button type="button" >button</button>
+
+     <!-- input as button -->
+      <input type="submit" value ="click me">  <!--submit as default value-->
+      <input type="button" value ="click me">
+      <!-- name -->
+       <input type=" text" name="username" placeholder="username">
+
+
+       <br><br>
+       <!-- select for dropdown  -->
+        <select name="profession" id="profession">
+            <option value="Student">Student</option>
+            <option value="Developer">Developer</option>
+        </select>
+
+        <!-- input range -->
+         <label for="volume">volume</label>
+         <input type="range" min="0" max="100" id="volume" name="vol" value="60"> <br><!--value -> initial value-->
+         <!-- text area -->
+          <label for="desc">Description</label>
+       <textarea name="desc" rows="4" cols="3" placeholder="Description" id="desc">
+
+       </textarea>
+</form>
+<form action="https://www.youtube.com/results">
+    <input type="text" name="search_query">
+    <button>search</button>
 </form>
