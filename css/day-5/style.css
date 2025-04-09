@@ -1,0 +1,58 @@
+/* h1{
+    color:red;
+
+}
+h3{
+    background-color: aqua;
+    color: red; */
+/* } */
+/* color system */
+/* named color around -150 */
+/* p{color:"red} */
+/* RGB 0-255 */
+/* h1{
+color:rgb(255,0,0) red
+}
+p{
+color:rgb(0,255,0) green
+}
+button{
+color:rgb(0,0,255) blue  
+color:rgb(255,255,0) yellow
+} */
+ /* 
+ hexa decimal 
+ h1{
+ color: #ffffff red green blue 
+ letters 0 1 2 3 4 5 6 7 8 9 a b c d e f
+  */
+
+/* Text Alighn */
+h1{
+text-align: center;
+text-decoration: wavy underline;
+text-decoration-color: red;
+letter-spacing: 10px;
+
+} 
+a{
+    text-decoration: none;
+}
+p{
+    font-family: fantasy;
+    letter-spacing: normal;
+line-height: 1.5;
+    text-align: right;
+    font-weight: normal;  /*400*/
+    font-size: 17px;
+}
+h3{
+    font-weight: bold;  /*700*/
+    text-align: right;
+    text-decoration: underline;
+    
+}
+h2{
+    text-decoration: blue underline;
+
+}
