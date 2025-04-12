@@ -1,0 +1,30 @@
+#face{
+background-color: rgb(207, 161, 12);
+height: 400px;
+width: 400px;
+border-radius: 50%;
+}
+#l,#r{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    display: inline-block;
+position: absolute;
+left: 100px;
+top: 100px;
+
+background-color: black;
+}
+#r{
+    left:250px
+}
+#smile{
+    height: 75px;
+    width: 210px;
+    border-radius: 0 0 50px 50px;
+    background-color: rgb(195, 22, 22);
+    position: absolute;
+    top: 250px;
+    left: 100px;
+
+}
