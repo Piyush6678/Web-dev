@@ -1,0 +1,15 @@
+ .box{
+height: 100px;
+width: 300px;
+background-color: blue;
+animation-name: fontAnimation;
+animation-duration: 2s;
+animation-timing-function: ease-in;
+animation-delay: .6s;
+/* animation-iteration-count: infinite; */
+animation-direction:reverse ;
+ }
+ @keyframes fontAnimation {
+    from {font-size: 20px;;}
+    to {font-size:40px;}
+ }
