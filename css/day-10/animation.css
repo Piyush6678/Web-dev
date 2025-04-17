@@ -13,3 +13,23 @@ animation-direction:reverse ;
     from {font-size: 20px;;}
     to {font-size:40px;}
  }
+ @keyframes color {
+    0% {color: red ;}
+    50% {color: white;}
+    100%{
+      color: blue;
+    }
+ }
+
+ @keyframes multiple{
+   from{
+      width: 10px;
+      background-color: blue;
+
+   }
+   to {
+      background-color: red;
+      border-radius: 50px;
+      width: 400px;
+   }
+ }
