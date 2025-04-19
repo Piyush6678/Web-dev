@@ -1,0 +1,18 @@
+body{
+    margin: 0;overflow: scroll;
+    font-family: "Montserrat", sans-serif;
+    background-color: black;
+    color: white;
+}
+.main {
+    display: flex;
+}
+.sidebar{
+    color:red;
+}
+.mainContent{
+    color: blue;
+}
+.musicplayer{
+    color: yellow;
+}
