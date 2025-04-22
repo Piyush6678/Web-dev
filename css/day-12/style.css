@@ -1,18 +1,134 @@
 body{
-    margin: 0;overflow: scroll;
+    margin: 0;overflow: hidden;
     font-family: "Montserrat", sans-serif;
     background-color: black;
     color: white;
 }
 .main {
     display: flex;
+    height: 100vh;
+    padding: 0.5em;
 }
-.sidebar{
-    color:red;
+.sideBar{
+    border-radius: 1rem;  /* 1rem=16px */
+       margin-right: 0.5rem;
+    width: 335px;
+    background-color:black;
 }
 .mainContent{
-    color: blue;
+    border-radius: 1rem;  /* 1rem=16px */
+overflow: auto;
+    background-color: #121212;
+    flex:1;
 }
-.musicplayer{
-    color: yellowgreen;
+.musicPlayer{
+    background-color: black;
+    position:fixed;
+    bottom: 0px;
+    width: 100vw;
+    height: 72px;
+
+}
+a{
+    color: white;
+    text-decoration: none;
+
+}
+.nav  {
+background-color: #121212;
+display: flex;
+flex-direction: column;
+border-radius: 1rem;
+height: 100px;
+padding: 0.5rem 0.75rem;
+justify-content: center;
+}
+.navoption{
+    padding: 0.4rem 0.76rem;
+line-height: 2.5rem;
+opacity: 0.68;
+align-items: center;
+}
+
+.navoption i{
+    
+    font-size: 1.4rem;
+}
+.navoption a{
+    margin-left: 0.5rem;
+    font-size: 1.20rem;
+    
+}
+.library{
+    height: 100%;
+    background-color: #121212;
+    border-radius: 1rem;
+margin-top: 0.6rem;
+padding: 0.4rem 0.76rem;
+
+}
+.option{
+
+    display: flex ;
+justify-content: space-between;
+align-items: center;
+}
+.liboption{
+    display: flex;
+    gap: 0.5rem;
+
+}
+.liboption a{
+    font-size: 1.2rem;
+}
+.liboption img{
+   height: 1.4rem;
+   width: 1.4em;
+}
+.icon{
+ 
+    display: flex;
+gap: 1.2rem;}
+
+.icon div{
+    opacity: 0.68;
+    z-index: 1;
+}
+
+
+
+.box{
+background-color: #232323;
+height: 8rem;
+border-radius: 0.75rem;
+margin: 0.75rem 0 1.75rem 0;
+padding: 0.75rem 1rem;
+
+}
+.boxp1{
+font-size: 1rem;
+font-weight: 500;
+}
+.boxp2{
+    font-size: 0.855rem;
+    opacity: 0.9;
+
+}
+.badge{
+    background-color: white;
+border: none;
+border-radius: 100px;
+padding: 0.25rem 1rem;
+font-weight: 700;
+margin-top: 0.5rem;
+height: 2rem;
+width: fit-content;
+}
+
+.icon div:hover{
+    opacity: 1;
+    
+}
+.navoption:hover{
+    opacity:1;
 }
