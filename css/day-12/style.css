@@ -16,6 +16,7 @@ body{
     background-color:black;
 }
 .mainContent{
+    padding:  1.5rem 0;
     border-radius: 1rem;  /* 1rem=16px */
 overflow: auto;
     background-color: #121212;
@@ -125,10 +126,69 @@ height: 2rem;
 width: fit-content;
 }
 
+.stickyNav{
+    position:sticky;
+    top:0px;
+    background-color: #121212;
+    display: flex;
+    color: white;
+justify-content: space-between;
+align-items: center;
+padding:1rem 0;
+}
+.navArrow{
+    margin-left: 0.75rem;
+    display: flex;
+}
+.navArrow img{
+   
+    
+}
+.badge2{
+    gap: 0.25rem;
+    color: white;
+    background-color: black;
+    padding: 0.25rem 1rem;
+}
+.navBadge{
+    margin-right: 0.5rem;
+    gap: 1rem;
+    display:flex;
+    align-items: center;
+}
+
+.cardContainer{
+    display:flex;
+}
+.card{
+background-color: #232323;
+width: 150px;
+padding:1rem;
+border-radius: 0.5rem;
+
+}
+.card img{
+    width: 100%;
+    border-radius: 0.5rem;
+}
+.title{
+    font-weight: 600;
+
+}
+.info{
+    font-size: 0.85rem;
+    opacity: 0.785;
+}
 .icon div:hover{
     opacity: 1;
     
 }
 .navoption:hover{
     opacity:1;
+}
+
+
+@media(max-width:1000px){
+   .hide{        display:none
+    }
 }
