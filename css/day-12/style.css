@@ -245,7 +245,7 @@ cursor: pointer;
 
 }
 .progressBar::-webkit-slider-runnable-track{
-    background-color: #ddd;
+    background-color: #cccccc;
     border-radius: 100px;
     height: 0.2rem;
 }
