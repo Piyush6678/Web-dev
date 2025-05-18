@@ -1,6 +1,6 @@
 import React from 'react'
-function Posiotions() {
+function Positions() {
     return (<></>  );
 }
 
-export default Posiotions;
+export default Positions;

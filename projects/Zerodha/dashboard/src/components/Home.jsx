@@ -1,5 +1,5 @@
 import React from 'react'
-import Dashboard from "Dashboard.jsx"
+import Dashboard from "./Dashboard.jsx"
 import TopBar from "./TopBar"
 function Home() {
     return (  <>
