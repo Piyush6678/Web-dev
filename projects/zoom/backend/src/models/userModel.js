@@ -8,7 +8,7 @@ const userSchema =new Schema({
 })
 
 
-const UserModel=mongoose.model
+const userModel=mongoose.model
 
 ("user",userSchema);
-export { UserModel}
+export { userModel}
