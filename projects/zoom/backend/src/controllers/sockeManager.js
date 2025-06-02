@@ -11,7 +11,15 @@ let timeOnline={}
 
 
 export const connectedToSocket=(server)=>{
-    const io =new Server(server)
+    const io =new Server(server,{
+        cors:{
+            origin:"*",
+            methods:["GET","POST"  ],
+            allowedHeaders:["*"],
+            credentials:true
+
+        }
+    })
 io.on("connection",(socket)=>{
     socket.on("join-class",(path)=>{
         if (connections[path]==undefined){
