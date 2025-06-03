@@ -13,7 +13,7 @@ const MONGO_URL=process.env.MONGO_URL;
 const server =createServer(app);
 const io=connectedToSocket(server);
 
-app.set("port",(process.env.PORT || 3002))
+app.set("port",(process.env.PORT || 8000))
 
 app.use(cors())
 app.use(express.json({limit:"40kb"}))

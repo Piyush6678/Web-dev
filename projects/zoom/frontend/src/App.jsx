@@ -11,7 +11,7 @@ export default function App() {
     <div className='App' >
       
 <BrowserRouter>
-        {/* <AuthProvider/> */}
+        <AuthProvider/>
 <Routes>
     <Route path='/' element={<LandingPage/>}  />
     <Route path='/auth' element={<Authentication/>}  />
