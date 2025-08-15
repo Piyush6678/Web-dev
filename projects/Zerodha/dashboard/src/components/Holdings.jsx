@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 // import { holdings } from "../data/data"
-import axios from "axios"
+import axios,{all} from "axios"
 
 
 function Holdings() {
@@ -8,13 +8,23 @@ function Holdings() {
 const [allHoldings,setAllholdings]=useState([]);
 useEffect(()=>{
 axios.get("http://localhost:3002/allHoldings").then((res)=>{
-    console.log (res.data)
+    // console.log (res.data)
     setAllholdings(res.data)
 })
 },[])
 
+const labels = allHoldings.map((subArray) => subArray["name"]);
 
-
+const data = {
+    labels,
+    datasets: [
+      {
+        label: "Stock Price",
+        data: allHoldings.map((stock) => stock.price),
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+    ],
+  };
 
     return ( <>
     
@@ -49,11 +59,12 @@ axios.get("http://localhost:3002/allHoldings").then((res)=>{
                 <td  className={profClass} >{(curValue-(stock.avg*stock.qty)).toFixed(2) }</td>
                 <td  className={profClass} > {stock.net} </td>
                 <td className={dayClass}  > {stock.day} </td>
-            </tr>
+             </tr>
 
-                 )
+                 );
+
 })}
-        </table>
+      </table>
     </div>
     
 <div className="row">
@@ -76,7 +87,7 @@ axios.get("http://localhost:3002/allHoldings").then((res)=>{
         <p>P&L</p>
 </div>
 </div>
-
+<VerticalGraph data={data}/>
 
     </> );
 }

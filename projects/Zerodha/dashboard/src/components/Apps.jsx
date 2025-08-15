@@ -1,6 +1,7 @@
-import React from 'react'
-function Apps() {
-    return ( <></> );
-}
+import React from "react";
+
+const Apps = () => {
+  return <h1>Apps</h1>;
+};
 
 export default Apps;
