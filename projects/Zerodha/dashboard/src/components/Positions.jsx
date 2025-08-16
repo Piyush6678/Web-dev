@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 // import { positions } from '../data/data';
 import axios from "axios"
 
@@ -21,7 +21,7 @@ axios.get("http://localhost:3002/allPositions").then((res)=>{
     <h3 className="title">  Positions ({allPositions.length}) </h3>
     <div className="order-table">
     <table>
-    
+    <thead>
        <tr>
         <th>Product</th>
                 <th>Instrument</th>
@@ -34,7 +34,8 @@ axios.get("http://localhost:3002/allPositions").then((res)=>{
                 <th>Chg.</th>
 
             </tr>
-
+</thead>
+<tbody>
   {allPositions.map((stock,index)=>{
                 const curValue=stock.price *stock.qty
                  const isProfit=curValue-(stock.avg*stock.qty)  >=0.0 
@@ -42,7 +43,7 @@ axios.get("http://localhost:3002/allPositions").then((res)=>{
                  const dayClass =stock.isLoss?"loss":"profit"
                  return (
 
-                 <tr key={index}  >
+                 <tr key={stock._id}  >
                 <td>{stock.product}  </td>
                 <td> {stock.name} </td>
                 <td> {stock.qty} </td>
@@ -53,9 +54,9 @@ axios.get("http://localhost:3002/allPositions").then((res)=>{
                 
                 <td className={dayClass}  > {stock.day} </td>
             </tr>
-
                  )
-})}
+                })}
+                </tbody>
 
 
             </table>

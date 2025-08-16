@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 // import { holdings } from "../data/data"
 import axios,{all} from "axios"
-
+import { VerticalGraph } from './VerticalGraph';
 
 function Holdings() {
 
