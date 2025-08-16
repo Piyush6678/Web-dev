@@ -72,9 +72,69 @@ getPermissions();
 },[])
 
 let getUserMediaSuccess=(stream)=>{
+  try{
+window.localStream.getTracks().forEach(track=>track.stop())
+  }catch(e){
+    console.log(e)
+  }
+
+window.localStream=stream;
+localVideoRef.current.srcObject=stream
+for(let id in connections){
+  if(id==socketIdRef.current)continue
+  connection[id].addStream(window.localStream)
+connections[id].createOffer().then((description)=>{
+  connection[id].setLocalDescription(description).then(()=>{
+    socketIdRef.current.emit("signal",id,JSON.stringify({"sdp":connections[id].localDescription}))
+  }).catch(e=>console.log(e))
+})
+}
+stream.getTracks().forEach(track=>track.onended=()=>{
+  setVideo(false) 
+  setAudio(false)
+  try{
+    let tracks=localVideoRef.current.srcObject.getTracks()
+    tracks.forEach(track=>track.stop)
+  }catch(e){
+    console.log(e)
+  }
+
+    let blackSilence=(...args)=>new MediaStream([black(...args),silence()])
+  window.localStream=blackSilence()
+  localVideoRef.current.srcObject=window.localStream
+
+  for(let id in connections){
+    connection[id].addStream(window.localStream)
+    connection[id].createOffer().then((description)=>{
+      connections[id].setLocalDescription(description).then(()=>{
+socketRef.current.emit("signal",id,JSON.stringify({"sdp",connections[id].localDescription}))
+      }).catch(e=>console.log(e))
+    }).catch(e=>console.log(e))
+    
+
+  }
+
+
+
+
+})
 
 }
+let silence = ()=>{
+  let ctx =new AudioContext()
+  let oscillator=ctx.createOscillator()
+  let dst =oscillator.connect(ctx.createMediaStreamDestination())
+  oscillator.start()
+  ctx.resume()
+  return Object.assign(dst.stream.getAudioTracks()[0],{enabled:false})
+}
+let black=({width=640, height=480}={})=>{
+let canvas= Object.assign(document.createElement("canvas"),{width,height})
 
+canvas.getContext("2d").fillRect(0,0,width,height)
+let stream =canvas.captureStream();
+return Object.assign(stream.getVideoTracks()[0],{enabled:false})
+}
 let getuserMedia =()=>{
   if((video && videoAvailabe) || (audio && audioAvailable) ){
     navigator.mediaDevices.getUserMedia({video:video,audio:audio}).then(()=>{}).then((stream)=>{}).catch((e)=>{console.log(e)})
@@ -90,8 +150,46 @@ useEffect(()=>{
 if(video!= undefined && audio!=undefined){
   getuserMedia();
 }
-},[audio,video])
-let getMessageFromServer=(fromId,message)=>{
+},[audio,video]) 
+let gotMessageFromServer=(fromId,message)=>{
+var signal=JSON.parse(message)
+
+if(fromId !=socketIdRef.current){
+  if(signal.sdp){
+    connections[fromId].setRemoteDescription(new RTCSessionDescription(signal.sdp)).then(()=>{
+      if(signal.sdp.type =="offer"){
+        connections[fromId].createAnswer().then((description)=>{
+          connections[fromId].setLocalDescription(description).then(()=>{
+            socketRef.current.emit("signal",fromId,JSON.stringify({"sdp":connections[fromId].localDescription}))
+          }).catch(e=>console.log(e))
+        }) .catch(e=>console.log(e))
+      }
+    }) .catch(e=>console.log(e))
+  }
+  if(signal.ice){
+    connections[fromId].addIceCandidate(new RTCIceCandidate(signal.ice)).catch(e=>console.log(e))
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 
@@ -99,12 +197,12 @@ let addMessage=()=>{}
 
 let connectToSocketServer=()=>{
   socketRef.current=io.connect(server_url,{secure:false})
-  socketRef.current.on("signal",getMessageFromServer)
+  socketRef.current.on("signal",o)
   socketRef.current.on("connect",()=>{
     socket.current.emit("join-call",window.location.href)
     socketRef.current=socketRef.current.id 
     socket.current.on("chat-message",addMessage)
-    socket.currenct.on("user-left",(id)=>{
+    socket.current.on("user-left",(id)=>{
        setVideo((videos)=>videos.filter((video)=>video.socket!=id) )
     })
     socketRef.current.on("user-joined",(id,clients)=>{
@@ -148,7 +246,9 @@ if(window.localStream !=null && window.localStream!=undefined){
   connections[socketListId].addStream(window.localStream);
 }
 else{
-  let blackSilence
+  let blackSilence=(...args)=>new MediaStream([black(...args),silence()])
+  window.localStream=blackSilence()
+  connections[socketListId].addStream(window.loacalStream)
 }
 
 
@@ -197,7 +297,17 @@ return (<div>
 
 
 </div>
-     </div> :<></>}
+     </div> :<>
+     
+     <video src={localVideoRef}  autoPlay muted ></video>
+   {video.map((video)=>(
+    <div key={video.socketId} >
+
+    </div>
+   ) 
+    
+   )}
+     </>}
     </div>
   )
 }
