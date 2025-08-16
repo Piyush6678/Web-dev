@@ -107,7 +107,7 @@ stream.getTracks().forEach(track=>track.onended=()=>{
     connection[id].addStream(window.localStream)
     connection[id].createOffer().then((description)=>{
       connections[id].setLocalDescription(description).then(()=>{
-socketRef.current.emit("signal",id,JSON.stringify({"sdp",connections[id].localDescription}))
+socketRef.current.emit("signal",id,JSON.stringify({"sdp":connections[id].localDescription}))
       }).catch(e=>console.log(e))
     }).catch(e=>console.log(e))
     
@@ -297,17 +297,26 @@ return (<div>
 
 
 </div>
-     </div> :<>
+     </div> :<div>
      
      <video src={localVideoRef}  autoPlay muted ></video>
    {video.map((video)=>(
     <div key={video.socketId} >
+      <video
+       data-socket={video.socketId}
+    ref={ref=>{
+      if(ref && value.stram){
+ref.srcObject=video.stream;
+      }
+    }} autoPlay
+      >
 
+      </video>
     </div>
    ) 
     
    )}
-     </>}
+     </div>}
     </div>
   )
 }

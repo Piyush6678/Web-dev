@@ -2,6 +2,7 @@ import { userModel } from "../models/userModel.js";
 import httpStatus from "http-status"
 import crypto from "crypto"
 import bcrypt,{hash} from "bcrypt"
+
 export const login =async (req,res)=>{
 const {username,password}=req.body;
 if (!username || !password){
@@ -15,7 +16,8 @@ try{
         return res.staus(httpStatus.NOT_FOUND).json({message:"user not Found"})
 
     }
-    if (bcrypt.compare(password,user.password)  ){
+    let isPasswordCorrect=bcrypt.compare(password,user.password) 
+    if (isPasswordCorrect ){
         let token =crypto.randomBytes(20).toString("hex");
         user.token=token;
         await user.save();

@@ -1,4 +1,4 @@
-import { userModel } from "../models/userModel.js";
+import { User } from "../models/userModel.js";
 import httpStatus from "http-status"
 import bcrypt,{hash} from "bcrypt"
 
@@ -6,7 +6,7 @@ import bcrypt,{hash} from "bcrypt"
 export const register =async (req,res)=>{
 const {name,username,password}=req.body;
 try{
-const existingUser =await userModel.find({
+const existingUser =await User.find({
     username 
 })
 if (existingUser){
