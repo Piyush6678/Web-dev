@@ -1,10 +1,12 @@
 import express from "express"
+import jwt from "jsonwebtoken"
 import { JWT_SECRET } from "@repo/backend-common/config";
 import {prismaClient} from "@repo/db/client"
-import jwt from "jsonwebtoken"
 import cors from "cors"
 import { middleware } from "./middleware";
 import {CreateUserSchema,CreateRoomSchema,SigninSchema } from "@repo/common/types"
+
+
 const app=express();
 app.use(express.json());
 app.use(cors())
@@ -30,7 +32,7 @@ res.json({userId:user.id})
 } catch(e){
     res.status(411).json({message:"user already exist"})
 }
-//dbcal
+//
 
 })
 app.post("/signin",async (req,res)=>{
@@ -40,8 +42,9 @@ app.post("/signin",async (req,res)=>{
         return 
     }
 //compare the hash passwrod
+
 const {username,password} = parsedData.data
-const user = await prismaClient.findFirst({
+const user = await prismaClient.user.findFirst({
 where:{
     email:username,
     password
@@ -67,7 +70,7 @@ app.post("/room", middleware, async (req,res)=>{
     //@ts-ignore
 
     const userId = req.userId;
-    try{
+    try{ 
     const room=await prismaClient.room.create({
         data:{
             slug:parsedData.data.name,
@@ -79,6 +82,8 @@ res.json({
     roomId:room.id
 })}
 catch(e){
+    console.log(e)
+    console.log("room backend failed")
     res.json({message:"room already exist with this name"})
 }
 
@@ -87,10 +92,13 @@ catch(e){
 
 app.get("/room/:slug",async (req,res)=>{
 const slug= req.params.slug;
-const room = await prismaClient.room.findFirst({
+try{const room = await prismaClient.room.findFirst({
     where:{slug}
 })
-res.json({room})
+res.json({room})} catch(e){
+    console.log(e);
+    res.send("somethin went wrong ")
+}
 })
 
 app.get("/chat/:roomId",async (req,res)=>{
@@ -103,10 +111,13 @@ app.get("/chat/:roomId",async (req,res)=>{
     orderBy:{
         id:"desc"
     },
-    take:50
+    take:100
    })
-
+    
    res.json({messages})}
-   catch(e){res.json({message:"failed chat "})}
+   catch(e){ console.log(e) 
+    res.json({message:"failed chat "})}
 })
-app.listen(3001);
+app.listen(3001, () => {
+    console.log("🚀 HTTP server is running on http://localhost:3001");
+});

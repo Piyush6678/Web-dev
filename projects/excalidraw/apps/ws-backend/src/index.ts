@@ -11,6 +11,7 @@ interface User {
 const users : User[] =[]
 
 function checkUser(token:string):string | null{
+
     try{
 const decoded = jwt.verify(token,JWT_SECRET)
 
@@ -23,8 +24,10 @@ if(!decoded || !(decoded as JwtPayload).userId){
   
     return null;
 }
-return decoded.userId;} catch(e){
-    return null
+
+return decoded.userId;
+} catch(e){
+    console.log(e);
 }
 return null
 }
@@ -54,18 +57,34 @@ if (parsedData.type ==="join_room"){
     const user =users.find(x=>x.ws===ws)
     user?.rooms.push(parsedData.roomId)
 }
-if (parsedData.type ==="leave_room "){
+if (parsedData.type ==="leave_room"){
     const user =users.find(x=>x.ws==ws)
     if(!user){return }
     user.rooms = user?.rooms.filter(x=> x !==parsedData.room)
 }
+if(parsedData.type=="delete_shape"){
+    const roomId=parsedData.roomId;
+    const chats=await prismaClient.chat.findMany({
+        where:{
+            roomId:Number(roomId),
+
+        }    
+    })
+
+    const deleteshape=chats.find((chat)=>{return JSON.parse(chat.message).shape.id==parsedData.shapeId})
+    await prismaClient.chat.delete(
+    { where: { id: deleteshape?.id } }
+    )
+    console.log("deleted")
+}
+console.log(parsedData)
 if (parsedData.type=="chat"){
     const roomId =parsedData.roomId;
     const message=parsedData.message;
 
 await prismaClient.chat.create({
     data:{
-        roomId,
+        roomId :Number(roomId),
         message,
         userId
     }

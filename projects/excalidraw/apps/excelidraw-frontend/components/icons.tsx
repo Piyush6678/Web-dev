@@ -8,7 +8,7 @@ export function IconButton(
     onClick:()=>void
 }
 ){
-    return <div  className={`rounded-full pointer border p-2 ${activated?"text-red":"text-white"}  bg-black hover:bg-gray `} onClick={onClick} >
+    return <div  className={`rounded-full pointer border p-2 ${activated ? "text-red-600":"text-white"}  bg-black hover:bg-gray-300 `} onClick={onClick} >
 {icon}
 
     </div>

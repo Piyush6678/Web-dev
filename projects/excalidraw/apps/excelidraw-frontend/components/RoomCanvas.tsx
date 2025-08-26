@@ -10,7 +10,8 @@ export default function RoomCanvas( {roomId}:{roomId:string} ){
 const [socket,setSocket]=useState <WebSocket |null> (null)
  
 useEffect(()=>{
-const ws=new WebSocket(WS_URL)
+    const token=localStorage.getItem("authorization")
+const ws=new WebSocket(`${WS_URL}/?token=${token}`)
 ws.onopen=()=>{
 setSocket(ws)
 

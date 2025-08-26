@@ -10,7 +10,8 @@ if(decoded){
 req.userId=decoded.userId;
 next()
 }
-else{
+else{ 
+    console.log("middleware failed")
     res.status(403).json({message:"Unauthorized"})
 }
 
