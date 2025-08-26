@@ -64,6 +64,7 @@ if (parsedData.type ==="leave_room"){
 }
 if(parsedData.type=="delete_shape"){
     const roomId=parsedData.roomId;
+   
     const chats=await prismaClient.chat.findMany({
         where:{
             roomId:Number(roomId),
@@ -73,8 +74,19 @@ if(parsedData.type=="delete_shape"){
 
     const deleteshape=chats.find((chat)=>{return JSON.parse(chat.message).shape.id==parsedData.shapeId})
     await prismaClient.chat.delete(
-    { where: { id: deleteshape?.id } }
+    { where: { id: deleteshape?.id ,userId} }
     )
+      users.forEach(user=>{
+        if(user.rooms.includes(roomId)){
+            user.ws.send(JSON.stringify({
+                type:"delete_shape",
+                shapeId:parsedData.shapeId,
+                roomId
+            }))
+        }
+    })
+
+
     console.log("deleted")
 }
 console.log(parsedData)
