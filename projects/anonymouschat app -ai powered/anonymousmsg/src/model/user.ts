@@ -26,8 +26,9 @@ export interface User extends Document{
     password:string;
     verifyCode:string;
     verifyCodeExpiry:Date;
+    isverified:boolean;
     isAcceptingMessage:boolean;
-    message:Message[]
+    messages:Message[]
 }
 
 const userSchema:Schema<User> = new Schema({
@@ -42,9 +43,22 @@ const userSchema:Schema<User> = new Schema({
         match:[/.+\@.+\..+/,"please use a valid email address"]
     },
     password:{type:String, required:[true,"password is required"],},
-    verifyCode:{type:String},
-    verifyCodeExpiry:{type:Date},
-    isAcceptingMessage:{type:Boolean,default:false},
-    message:Message[],
+    verifyCode:{type:String,required:[true,"verify code is not available"]},
+    verifyCodeExpiry:{
+        type:Date,
+        required:[true,"verify code expiry is not available"]
 
+    },
+    isverified:{
+        type:Boolean,
+        default:false,
+
+    },
+    isAcceptingMessage:{type:Boolean,default:true},
+    messages:[MessageSchema],
+    
 })
+
+const UserModel=(mongoose.models.User as mongoose.Model<User>)|| ( mongoose.model<User>("User",userSchema))
+
+export default UserModel;
