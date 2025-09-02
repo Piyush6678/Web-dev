@@ -40,7 +40,7 @@ if(existingUser){
 }
  return Response.json({
             success:true,
-            message:"Username is available "
+            message:"Username is available"
         },{status:200})
 
     } catch (error) {
