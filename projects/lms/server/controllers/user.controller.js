@@ -24,7 +24,7 @@ if(userExists){
 const  user =await User.create({
     fullname,email,password,
     avatar:{
-        public_id:email,
+        public_id:email, 
         secure_url:""
     }
 })
