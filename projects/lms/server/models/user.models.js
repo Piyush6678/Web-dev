@@ -1,6 +1,7 @@
 import { Schema,model } from "mongoose";
 import  bcrypt from "bcryptjs"
 import  jwt  from "jsonwebtoken";
+import crypto from "crypto"
 const userSchema=new Schema({
     fullname:{type:String,required:[true,"name is required"],minLength:[5,'name must be atleast 5 character'],macLength:[50,'name must be note more than 50 character'],trim:true,lowercase:true,},
     email:{
@@ -28,7 +29,7 @@ role:{
     enum:["USER","ADMIN"],
     default:"USER",
 },
-forgotPassword:String,
+forgotPasswordToken:String,
 forgotPasswordExpiry:Date,
 },{timestamps:true})
 
@@ -45,7 +46,18 @@ userSchema.methods={
         },process.env.JWT_SECRET,{
             expiresIn:process.env.JWT_EXPIRY
         })
+    },
+    comparePassword:async (password)=>{
+       return await  bcrypt.compare(password,this.password)
+    },
+
+    generatePasswordToken:async()=>{
+        const resetToken=crypto.randomBytes(20).toString("hex");
+    this.forgotPasswordToken=crypto.createHash("sha256").update(resetToken).digest("hex");
+    this.forgotPasswordExpiry=Date.now()+15*60*1000 //15 minutes from now 
+    return resetToken
     }
+
 }
 const User=model("user",userSchema)
 export default User; 

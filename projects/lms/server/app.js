@@ -4,9 +4,11 @@ import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import userRouter from "./routes/user.routes.js";
 import errorMiddelware from "./middlewares/error.middleware.js";
+import courseRouter from "./routes/course.routes.js";
 const app=express();
 
 app.use(express.json());
+app.use(express.urlencoded({extended:true}))
 app.use(cors({
 origin:[process.env.FRONTED_URl],
 credentials:true
@@ -22,6 +24,7 @@ app.use("/ping",(req,res)=>{ // /ping/anything give pong message
 //routes if three module 
 
 app.use("/api/v1/user",userRouter)
+app.use("/api/v1/course",courseRouter)
 
 
 
