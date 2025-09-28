@@ -15,3 +15,19 @@ console.log(user.getUserDeatils());
 console.log(this)   //{}
 
 
+function User(username ,loginCount,isLoggedIn){
+    this.username=username;
+    this.loginCount=loginCount
+    this.isLoggedIn=isLoggedIn
+    return this
+}
+
+const userOne=new User("piyush",3,true)
+const userTwo=new User("mridul",6,true)
+console.log(userOne)
+
+
+
+
+
+
