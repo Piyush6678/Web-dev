@@ -8,7 +8,7 @@ courseRouter.route("/:id")
 .get(isLoggedIn,authorizedRoles("ADMIN"),getLecturesByCourseId)
 .put(isLoggedIn,authorizedRoles("ADMIN"),updateCourse)
 .delete(isLoggedIn,authorizedRoles("ADMIN"),removeCourse)
-.post(isLoggedIn,authorizedRoles,addLectures)
+.post(isLoggedIn,authorizedRoles,upload.single("lecture"),addLectures)
 
 
 export default courseRouter;

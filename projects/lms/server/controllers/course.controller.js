@@ -142,12 +142,13 @@ if(!course){
 const lectures={
     title,
     description,
+    lecture:{}
 }
  try{ if(req.file){
             const result=await cloudinary.v2.uploader.upload(req.file.path,{folder:"lms"});
             if(result){
-                lectureData.thumbnail.public_id=result.public_id 
-                lectureData.thumbnail.secure_url=result.secure_url 
+                lectureData.lecture.public_id=result.public_id 
+                lectureData.lecture.secure_url=result.secure_url 
             }
             fs.rm(`uploads/${req.file.filename}`)
         }} catch(e){
@@ -161,7 +162,7 @@ course.numberOfLectures=course.lectures.length;
 await course.save();
 res.status(200).json({
     success:true,
-message:"lecturer created successfully "
+message:"lecture created successfully "
 })}catch(e){
       return next(
             new AppError(e.message,400))
