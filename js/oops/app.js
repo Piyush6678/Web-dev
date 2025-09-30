@@ -19,7 +19,10 @@ function User(username ,loginCount,isLoggedIn){
     this.username=username;
     this.loginCount=loginCount
     this.isLoggedIn=isLoggedIn
-    return this
+    this.greeting =funtion (){
+        console.log(`welcome ${this.username}`);
+    }
+    return this // it is implicitly return this so if you even not return this it will return this 
 }
 
 const userOne=new User("piyush",3,true)
