@@ -29,7 +29,7 @@ console.log(" hello piyush ")
 
 
 myHeros.heyPiyush() //heyPiyush is present in all array
-heroPower.heypiyush() //heyPiyush is not not present
+// heroPower.heypiyush() //heyPiyush is not not present
 
 
 // INHERITANCE
@@ -53,3 +53,11 @@ Teacher.__proto__=User
 
 //modern Syntax 
 Object.setPrototypeOf(TeachSupport,Teacher)
+
+let anotherUsername="ChaiaurCode  "
+String.prototype.trueLength=function(){
+    console.log(`${this.name}`)//undefined
+    console.log(`${this}`) // string value chaiaurCode in this case 
+    console.log(`True length is ${this.trim().length}`)//11
+}
+anotherUsername.trueLength()
