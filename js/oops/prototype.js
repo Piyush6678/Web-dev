@@ -30,3 +30,23 @@ console.log(" hello piyush ")
 
 myHeros.heyPiyush() //heyPiyush is present in all array
 heroPower.heypiyush() //heyPiyush is not not present
+
+
+// INHERITANCE
+const User={
+    name:"piyush",
+    email:"chai@google.com"
+}
+const Teacher={
+    makeVideos:true
+}
+const TeachSupport={
+    isAvailable:false
+}
+const TASupport={
+    makeAssignment:"JS Assignment",
+    fullTime:true,
+    __proto__:TeachSupport
+}
+//or 
+Teacher.__proto__=User
