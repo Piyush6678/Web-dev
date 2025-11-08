@@ -14,7 +14,7 @@ const [isNewGroup,setIsNewGroup]=useState(false)
 const [isNotification,setIsNotification]=useState(false)
 
 const SearchDialog=lazy(()=>import("../specific/Search"))
-const GroupDialog=lazy(()=>import("../specific/NewGroups"))
+const newGroupDialog=lazy(()=>import("../specific/NewGroups"))
 const NotificationDialog=lazy(()=>import("../specific/Notification"))
 
 
@@ -101,7 +101,7 @@ Chatify
 {
   isNewGroup&&(
 <Suspense fllaback={<div>Loading..</div>}>
-    <GroupDialog/></Suspense>
+    <newGroupDialog/></Suspense>
   )
 }
 {

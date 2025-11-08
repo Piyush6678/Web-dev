@@ -1,5 +1,6 @@
 import Course from "../models/course.model.js";
-
+import cloudinary from "cloudinary"
+import AppError from "../utils/error.utils.js"
 import fs from "fs/promises"
 const getAllCourses=async (req,res,next)=>{
 try{
@@ -55,10 +56,9 @@ const createCourse=async(req,res,next)=>{
             secure_url:"dummy",
         }
 
-
     });
     if(!course){   return next(
-            new AppError("course creation failed ",400)
+            new AppError ("course creation failed ",400)
         )}
 
        try{ if(req.file){
@@ -124,7 +124,7 @@ const removeCourse=async(req,res,next)=>{
         
     }
 }
-const addLectures=async(req,res,enxt)=>{
+const addLectures=async(req,res,next)=>{
    try
    {
     const {title,description}=req.body;
@@ -139,7 +139,7 @@ if(!course){
  return next(new AppError("coure with given id is not exists",500))
 }
 
-const lectures={
+const lectureData={
     title,
     description,
     lecture:{}

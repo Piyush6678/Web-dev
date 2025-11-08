@@ -31,6 +31,10 @@ role:{
 },
 forgotPasswordToken:String,
 forgotPasswordExpiry:Date,
+subscription:{
+    id:String,
+    status:String
+}
 },{timestamps:true})
 
 userSchema.pre("save",async(next)=>{
