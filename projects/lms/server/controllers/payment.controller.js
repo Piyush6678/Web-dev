@@ -54,7 +54,40 @@ re.status(200).json({
 
 }
 export const   allPayments = async(req,res,next)=>{}
-export const   cancelSubscription = async(req,res,next)=>{}
+export const   cancelSubscription = async(req,res,next)=>{
+try{const {id}=req.user
+
+const user= await User.findById(id)
+if(!user){
+    return next(
+        new AppError("unauthorized ,please login")
+    )
+}
+if(user.role==="ADMIN"){
+
+return next(
+        new AppError("ADMIN CANT PURCHASE THE COURSE",400)
+    )
+
+}
+
+const subscriptionId=user.subscription.id;
+const subscription=await razorpay.subscriptions.cancel(subscriptionId)
+
+user.subscription.status=subscription.status
+await user.save()
+
+
+res.status(200).json({
+    success:true,
+    message:"subscription cancelled"
+})
+}
+catch(e){return(next(new AppError(e,500)))}
+
+
+
+}
 export const   verifySubscription = async(req,res,next)=>{
 
 
