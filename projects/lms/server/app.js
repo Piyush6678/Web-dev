@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import userRouter from "./routes/user.routes.js";
+import paymentRouter from "./routes/payment.routes.js";
 import errorMiddelware from "./middlewares/error.middleware.js";
 import courseRouter from "./routes/course.routes.js";
 const app=express();
@@ -25,6 +26,7 @@ app.use("/ping",(req,res)=>{ // /ping/anything give pong message
 
 app.use("/api/v1/user",userRouter)
 app.use("/api/v1/course",courseRouter)
+app.use("/api/v1/payments",paymentRouter)
 
 
 
