@@ -6,7 +6,7 @@ const Grid = ({noOfCards}) => {
   cost [board,setBoard]=useState(Array(noOfCards).fill(""))
   const [turn,setTurn]=useState(true) // true=>O
   const[winner ,setIsWinner]=useState(null)
-  function play(idx){
+  function Play(idx){
     if(turn){
         board[idx]="O"
     }else{
