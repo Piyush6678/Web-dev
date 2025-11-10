@@ -4,10 +4,10 @@ import "./card.css"
 const Card = ({player,onPlay,index}) => {
     let icon=<Icon/>
     if(player=="X"){
-        icon=<Icon name="Cross"/>
+        icon=<Icon name={"Cross"}/>
     }
   else  if(player=="O"){
-        icon=<Icon name="Circle"/>
+        icon=<Icon name={"Circle"}/>
     }
   return (
     <div className='card' onClick ={()=>onPlay(index)}>
