@@ -50,7 +50,7 @@ function resetgame(){
         </h1>
 
     <div className="grid">
-{board.map((el,idx)=><Card onPlay={play} player={el} index={idx} key={idx}/>)}
+{board.map((el,idx)=><Card gameRnd={winner?true:false} onPlay={play} player={el} index={idx} key={idx}/>)}
 
     </div>
     </div>

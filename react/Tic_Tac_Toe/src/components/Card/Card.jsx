@@ -1,7 +1,7 @@
 import React from 'react'
 import Icon from '../Icon/Icon'
 import "./card.css"
-const Card = ({player,onPlay,index}) => {
+const Card = ({player="",onPlay,index , gameEnd}) => {
     let icon=<Icon/>
     if(player=="X"){
         icon=<Icon name={"Cross"}/>
@@ -10,7 +10,7 @@ const Card = ({player,onPlay,index}) => {
         icon=<Icon name={"Circle"}/>
     }
   return (
-    <div className='card' onClick ={()=>onPlay(index)}>
+    <div className='card' onClick ={()=>!gameEnd && player=="" && onPlay(index)}>
       {icon}
     </div>
   )
