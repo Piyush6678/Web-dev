@@ -26,4 +26,15 @@ return next(
 
 
 
-export { isLoggedIn,authorizedRoles}
+
+const authorizedsubscriber=async (req,res,next)=>{
+   const subscription=req.user.subscription
+   const currentUserRole=req.user.role
+if(currentUserRole!=="ADMIN" && subscription.status!=="active"){
+    return next(new AppError("please subscribe to access this",403))
+
+}
+next()
+}
+
+export { isLoggedIn,authorizedRoles,authorizedsubscriber}
