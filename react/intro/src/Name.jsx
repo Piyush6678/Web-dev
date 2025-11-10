@@ -8,4 +8,4 @@ const Name = ({children}) => {
   )
 }
 
-export default Nmae
+export default Name

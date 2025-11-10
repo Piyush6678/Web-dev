@@ -1,5 +1,5 @@
 import React from 'react'
-import Nmae from './name'
+import Name from "./Name.jsx"
 // named export
 export const Image=(props)=>{ 
     return <img src={props.src}/>
@@ -11,9 +11,9 @@ const DogCard = ({name}) => { // destructur props
         //   pasing jsx as prop 
         <div>
             <h1 style={{fontSize:"10px",color:"red"}}  >{title}</h1>
-    <Nmae>
+    <Name>
         <h2> {name}</h2> 
-               </Nmae>   
+               </Name>   
     <Image src="https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg"/>
     
     </div>
