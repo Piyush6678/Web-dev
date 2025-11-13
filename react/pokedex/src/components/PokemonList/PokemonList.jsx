@@ -24,14 +24,27 @@ setIsLoading(false);
     },[])
     return (
     <div className='PokemonList'>
-     <div> Pokemon list</div>
-      {(isLoading)?"Loading...":(
+  
+   <div className="pokemonWrapper">
+       {(isLoading)?"Loading...":(
             pokemon_list.map((p)=><Pokemon key={p.id} name={p.name} image={p.image
             } />)
 
 
 
       )}
+   </div>
+
+
+<div className='controls' >
+    <button>
+    Previous
+    </button>
+    <button>
+   Next
+    </button>
+    </div>
+
     </div>
   )
 }

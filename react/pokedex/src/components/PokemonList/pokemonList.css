@@ -1,4 +1,20 @@
 .PokemonList{
-    margin: 0 auto;
-    
+    margin: 2rem auto;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+.pokemonWrapper{
+
+display: flex;
+flex-wrap: wrap;
+justify-content: space-evenly;
+
+}
+.controls{
+ padding: 1rem;
+ margin-left: 1rem;
+ padding-top: 0.5rem;
+ padding-bottom:0.5rem ;
+ padding-left: 1rem;
 }
