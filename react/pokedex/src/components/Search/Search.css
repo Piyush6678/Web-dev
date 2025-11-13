@@ -1,0 +1,10 @@
+.searchWrapper{
+
+margin: 0 auto;
+}
+
+#pokemonSearch{
+    margin-top: 2rem;
+    padding: 1.5rem;
+    width:600px ;
+}
