@@ -3,11 +3,16 @@ import React, { useEffect, useState } from 'react'
 import "./pokemonList.css"
 import Pokemon from '../Pokemon/Pokemon'
 const PokemonList = () => {
-  const POKEDEX_URL="https://pokeapi.co/api/v2/pokemon"
+  const [PokedexUrl,setPokedexUrl]=useState("https://pokeapi.co/api/v2/pokemon")
+
+  const [nextUrl,setNextUrl]=useState("");
+  const [prevUrl,setPrevUrl]=useState("");
+
 const[ pokemon_list,setPokemon_list]=useState([])
 const [isLoading,setIsLoading]=useState(true)
     useEffect(async()=>{
-const response=await axios.get(POKEDEX_URL)
+        setIsLoading(true)
+const response=await axios.get(PokedexUrl)
 const pokemonResults=response.data.results;
 const pokemonResultPromise=pokemonResults.map(async(pokemon)=> axios.get(pokemon.url))
 const pokemonData=await axios.all(pokemonResultPromise)
@@ -19,9 +24,17 @@ const res=(pokemonData.map((pokeData)=>{
         id:pokemon.id
      }
 }))
+
+setNextUrl(response.data.next)
+setPrevUrl(response.data.previous)
+
 setPokemon_list(res)
 setIsLoading(false);
     },[])
+
+    const onNext=()=>{
+
+    }
     return (
     <div className='PokemonList'>
   
@@ -37,10 +50,14 @@ setIsLoading(false);
 
 
 <div className='controls' >
-    <button>
+    <button disabled={(prevUrl==null)}  onClick= {  ()=>{
+        setPokedexUrl(prevUrl)
+    }    } >
     Previous
     </button>
-    <button>
+    <button  onClick= {  ()=>{
+        setPokedexUrl(nextUrl)
+    }    }  disabled={(nextUrl==null)}>
    Next
     </button>
     </div>
