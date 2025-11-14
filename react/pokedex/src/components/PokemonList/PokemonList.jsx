@@ -32,15 +32,13 @@ setPokemon_list(res)
 setIsLoading(false);
     },[])
 
-    const onNext=()=>{
-
-    }
+    
     return (
     <div className='PokemonList'>
   
    <div className="pokemonWrapper">
        {(isLoading)?"Loading...":(
-            pokemon_list.map((p)=><Pokemon key={p.id} name={p.name} image={p.image
+            pokemon_list.map((p)=><Pokemon key={p.id} id={p.id} name={p.name} image={p.image
             } />)
 
 

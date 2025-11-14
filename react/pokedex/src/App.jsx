@@ -1,14 +1,19 @@
 
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 import "./App.css"
-import Pokedex from "./components/Pokedex/Pokedex"
+
+import CustomRoutes from "./routes/customRoutes"
 function App() {
  
   return (
-    <>
-     <Pokedex/>
     
-    </>
-  )
+
+<CustomRoutes/>
+
+
+    
+    
+)
 }
 
 export default App
