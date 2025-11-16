@@ -1,11 +1,16 @@
 import React from 'react'
 import Search from '../Search/Search'
 import "./Pokedex.css"
+import PokemonList from '../PokemonList/PokemonList'
+import PokemonDetails from '../PokemonDetails/PokemonDetails'
 const Pokedex = () => {
+const [searchTerm,setsearchTerm]=useState("")
+
   return (
     <div className='PokedexWrapper' >
-        <h1 id='pokedexHeading' >Pokedex</h1>
-      <Search/>
+        
+      <Search updateSearchterm={setsearchTerm} />
+{ (!searchTerm) ?    <PokemonList/>: <PokemonDetails key={searchTerm} pokemonName={searchTerm}/> }
     </div>
   )
 }
