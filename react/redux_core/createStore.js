@@ -1,6 +1,11 @@
-import { createStore } from "redux";
+import { bindActionCreators, createStore } from "redux";
+const ADD_TODO="add_todo"
+const DEL_TODO="delete_todo"
+const EDIT_TODO="edit_todo"
+
+
 function todoReducer(state,action){ 
-    if(action.type=="add_todo"){
+    if(action.type==ADD_TODO){
         const todotext=action.payload.todoText;
         return[
             ...state,
@@ -8,23 +13,43 @@ function todoReducer(state,action){
 
 
         ]
-    }else if(action.type=="edit_todo"){
-       const todo=action.payload.todo; 
+    }else if(action.type==EDIT_TODO){
+       const todoId=action.payload.todoId; 
        const todotext=action.payload.todoText;
-       return state.map(t=>{if(t.id==todo.id){
+       return state.map(t=>{if(t.id==todoId){
         t.text=todotext
        }
     return t;})
     }
-    else if(action.type=="delete_todo"){
-const todo=action.payload.todo;
-return state.filter(t=>t.id!=todo.id)
+    else if(action.type==DEL_TODO){
+const todoId=action.payload.todo;
+return state.filter(t=>t.id!=todoId)
     }
 
 return state;
 
 
 }
+const addTodo=(todoText)=>
+    ({
+        type:ADD_TODO,
+        payload:{todoText}
+    }
+)
+const deleteTodo=(id)=>
+    ({
+        type:DEL_TODO,
+        payload:{todoId:id}
+    }
+)
 
-
+const actions=bindActionCreators({addTodo,deleteTodo})
 const response=createStore(todoReducer,[])
+console.log(response)
+// {
+//   dispatch: [Function: dispatch],
+//   subscribe: [Function: subscribe],
+//   getState: [Function: getState],
+//   replaceReducer: [Function: replaceReducer],
+//   '@@observable': [Function: observable]
+// }
