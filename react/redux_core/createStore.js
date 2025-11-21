@@ -1,4 +1,4 @@
-import { bindActionCreators, createStore } from "redux";
+import { bindActionCreators, combineReducers, createStore } from "redux";
 const ADD_TODO="add_todo"
 const DEL_TODO="delete_todo"
 const EDIT_TODO="edit_todo"
@@ -53,3 +53,23 @@ console.log(response)
 //   replaceReducer: [Function: replaceReducer],
 //   '@@observable': [Function: observable]
 // }
+
+function useReducer(state={},action){
+if(action.type==ADD_USER){
+    const username=action.payload.username
+return [
+...state,{name:username,id:(state.length==0)?1:state[state.length-1].id+1
+
+}
+
+
+]
+
+}
+}
+
+
+const reducer=combineReducers({
+tod:todoReducer,user:useReducer
+
+})
