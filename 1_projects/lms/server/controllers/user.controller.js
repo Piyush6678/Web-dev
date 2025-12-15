@@ -73,7 +73,7 @@ res.status(200).json({
 }
 const login=async(req,res,next)=>{
  try{   const {email,password}=req.body;
-if(!fullname ||! email || !password){
+if( ! email || !password){
     return next( new AppError("all fields are reuired",400))
 }
 const user=await User.findOne({email}).select("+password");
@@ -81,7 +81,7 @@ if(!user || !user.comparePassword(password)){
     return next (new AppError("email or password does not match ",40))
 }
 const token=await user.generateJWTToken()
-user.password=undefined();
+user.password=undefined;
 res.cookie("token",token,cookieOptions)
 res.status(200).json({
     success:true,

@@ -1,5 +1,5 @@
-import { jwt } from "jsonwebtoken";
-import AppError from "../utils/error.utils";
+import jwt from "jsonwebtoken";
+import AppError from "../utils/error.utils.js";
 
 const isLoggedIn=async(req,res,next)=>{
 const {token}=req.cookies;
@@ -9,12 +9,15 @@ if(!token){
 }
 
 const userDetails=await jwt.verify(token,process.env.JWT_SECRET)
+
 req.user=userDetails;
 next()
 }
 
 const authorizedRoles=(...roles)=>async(req,res,next)=>{
-    const currentuserRoles=req.user.role;
+ 
+   const currentuserRoles=req.user.role;
+   console.log(currentuserRoles)
     if(!roles.includes(currentuserRoles)){
 return next(
     new AppError("you dont have permission to access this route")

@@ -13,6 +13,12 @@ const userSchema=new Schema({
         match:[/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,"Please enter a valid email"]
 
     },
+
+  password:{type:String,required:[true,"password is required"],
+    minLength:[6,"password is too short "],
+    select :false
+
+},
     emailOtp:{
         type:String
     },

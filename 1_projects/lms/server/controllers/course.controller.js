@@ -4,14 +4,16 @@ import AppError from "../utils/error.utils.js"
 import fs from "fs/promises"
 const getAllCourses=async (req,res,next)=>{
 try{
-const courses= await Course.find().select(-lectures);
+const courses= await Course.find().select("-lectures");
 res.status(200).json({
     success:true,message:"all courses we have",
     courses,
 })}
 
 catch(e){
+  
      return next(
+        
             new AppError("no course availabe ",500)
         )}
 
@@ -125,8 +127,10 @@ const removeCourse=async(req,res,next)=>{
     }
 }
 const addLectures=async(req,res,next)=>{
-   try
+  
+    try
    {
+    
     const {title,description}=req.body;
 
 
@@ -144,18 +148,20 @@ const lectureData={
     description,
     lecture:{}
 }
- try{ if(req.file){
+ 
+    if(req.file){
+         try{
             const result=await cloudinary.v2.uploader.upload(req.file.path,{folder:"lms"});
             if(result){
                 lectureData.lecture.public_id=result.public_id 
                 lectureData.lecture.secure_url=result.secure_url 
             }
             fs.rm(`uploads/${req.file.filename}`)
-        }} catch(e){
+        } catch(e){
             console.log("error occured in uploading lectures ",e)
             return next(
             new AppError(e.message,400))
-        }
+        }}
 
 course.lectures.push(lectureData);
 course.numberOfLectures=course.lectures.length;

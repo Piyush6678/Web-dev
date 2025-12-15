@@ -37,7 +37,7 @@ subscription:{
 }
 },{timestamps:true})
 
-userSchema.pre("save",async(next)=>{
+userSchema.pre("save",async function (next){
 if(!this.isModified("password")){
 return next()
 }
@@ -48,14 +48,15 @@ userSchema.methods={
         return  jwt.sign({
             id:this._id,email:this.email,subscription:this.subscription,role:this.role
         },process.env.JWT_SECRET,{
+           
             expiresIn:process.env.JWT_EXPIRY
         })
     },
-    comparePassword:async (password)=>{
+    comparePassword:async function(password){
        return await  bcrypt.compare(password,this.password)
     },
 
-    generatePasswordToken:async()=>{
+    generatePasswordToken:async function (){
         const resetToken=crypto.randomBytes(20).toString("hex");
     this.forgotPasswordToken=crypto.createHash("sha256").update(resetToken).digest("hex");
     this.forgotPasswordExpiry=Date.now()+15*60*1000 //15 minutes from now 
