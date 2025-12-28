@@ -6,13 +6,14 @@ import sendEmail from "../utils/sendEmail.js";
 const cookieOptions={
 maxAge:7*25*60*60*1000,
 hrrpOnly:true,
-secure:true
+secure:true 
 }
 import crypto from "crypto"
 
 const register=async(req,res,next)=>{
     const {fullname,email,password}=req.body;
 if(!fullname ||! email || !password){
+   
     return next( new AppError("all fields are reuired",400))
 }
 
@@ -20,6 +21,7 @@ const userExists=await User.findOne({
     email
 })
 if(userExists){
+    
       return next( new AppError("user alreday exists",400))
 }
 
@@ -32,6 +34,7 @@ const  user =await User.create({
 })
 
 if(!user ){
+   
     return next(new AppError("user registeration failed ,please try again",400))
 }
 
@@ -40,7 +43,7 @@ if(req.file){
     try{
 const result =await cloudinary.v2.uploader.upload(req.file.path,{
     folder:"lms",
-    widdth:250,
+    width:250,
     height:250,
     gravity:"faces",
     crop:"fill"
@@ -190,16 +193,19 @@ res.status(200).json({success:"true",message:"Password changed successfully"})
 }
 
 const updateUser=async(req,res)=>{
-const {fullname}=req.body;
+
+    const {fullname}=req.body;
+
 const userId=req.user.id
 const user = await User.findById(userId)
+console.log(user)
 if(!user){
  return next(new AppError("user doesnot exists  ",400))
 }
 
-if(req.fullname){
+
    user.fullname=fullname; 
-}
+
 
 if(req.file){
     await cloudinary.v2.uploader.destroy(user.avatar.public_id )
@@ -224,8 +230,8 @@ if(result){
         )
 
     }
-}
-await user.save();
+}await user.save()
+
 res.status(200).json({success:true,message:"User details updated"})
 
 }

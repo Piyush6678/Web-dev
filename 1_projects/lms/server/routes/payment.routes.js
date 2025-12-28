@@ -7,7 +7,7 @@ router.route('/razorpay-key')
     isLoggedIn,
     getRazorpayApiKey);
 
-router.route("/subscription")
+router.route("/subscribe")
 .post(  
     isLoggedIn,
     buySubscription)
