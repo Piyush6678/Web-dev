@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 import AppError from "../utils/error.utils.js";
 
+import User from "../models/user.models.js";
+
 const isLoggedIn=async(req,res,next)=>{
 const {token}=req.cookies;
 if(!token){
@@ -10,7 +12,7 @@ if(!token){
 
 const userDetails=await jwt.verify(token,process.env.JWT_SECRET)
 
-req.user=userDetails;
+req.user = await User.findById(userDetails.id);
 next()
 }
 
@@ -20,7 +22,7 @@ const authorizedRoles=(...roles)=>async(req,res,next)=>{
    console.log(currentuserRoles)
     if(!roles.includes(currentuserRoles)){
 return next(
-    new AppError("you dont have permission to access this route")
+    new AppError("you dont have permission to access this route",401)
     )
     }
     next();
@@ -31,9 +33,9 @@ return next(
 
 
 const authorizedsubscriber=async (req,res,next)=>{
-   const subscription=req.user.subscription
-   const currentUserRole=req.user.role
-if(currentUserRole!=="ADMIN" && subscription.status!=="active"){
+   const subscription=req.user.subscription;
+   const currentUserRole=req.user.role;
+   if(currentUserRole!=="ADMIN" && subscription.status!=="active"){
     return next(new AppError("please subscribe to access this",403))
 
 }

@@ -7,7 +7,7 @@ const upload=multer({
         destination:"uploads/",
         filename:(_req,file,cb)=>{cb(null,file.originalname)},
     }) ,
-    fileFilter:(_req,file,cb)=>{
+    fileFilter:(_req,file,cb)=>{  
         let ext=path.extname(file.originalname);
         if
             (ext !== ".jpg" &&

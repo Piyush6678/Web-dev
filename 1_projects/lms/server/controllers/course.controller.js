@@ -48,7 +48,7 @@ res.status(200).json({
 
 const createCourse=async(req,res,next)=>{  
     const {title,description,category,createdBy}=req.body;
-    if(!title || ! description || !category ||! createdBy){
+    if(!title || !description || !category ||! createdBy){
         return next(
             new AppError("All fields are required ",400)
         )
@@ -60,6 +60,7 @@ const createCourse=async(req,res,next)=>{
         }
 
     });
+
     if(!course){   return next(
             new AppError ("course creation failed ",400)
         )}
@@ -72,7 +73,7 @@ const createCourse=async(req,res,next)=>{
             }
             fs.rm(`uploads/${req.file.filename}`)
         }} catch(e){
-            console.log("error occured in creting course",e)
+            console.log("failed to upload image ",e)
             return next(
             new AppError(e.message,400))
         }
@@ -87,6 +88,7 @@ const createCourse=async(req,res,next)=>{
 const updateCourse=async(req,res,next)=>{
 try{
 const {id}=req.params;
+
 const course=await Course.findByIdAndUpdate(
     id,{
         $set:req.body
@@ -97,6 +99,8 @@ const course=await Course.findByIdAndUpdate(
 if(!course){
     return next(new AppError("coure with given id is not exists",500))
 }
+
+
 res.status(200).json({
     success:true,
     message:"course updated successfully ",
@@ -112,12 +116,12 @@ res.status(200).json({
 const removeCourse=async(req,res,next)=>{
     try {
         const {id}=req.params;
-        const course =await Course.findById(id);
+        const course =await Course.findByIdAndDelete(id);
         if(!course){
             return next(new AppError("coure with given id is not exists",500))
         }
-        // if not work do  find by id and delete
-        await course.deleteOne({_id:id});
+        // // if not work do  find by id and delete
+        // await course.deleteOne({_id:id});
         res.status(200).json({success:true,
             message:"course deleted successfully",
         })
@@ -152,7 +156,9 @@ const lectureData={
  
     if(req.file){
          try{
-            const result=await cloudinary.v2.uploader.upload(req.file.path,{folder:"lms"});
+            const result=await cloudinary.v2.uploader.upload(req.file.path,{folder:"lms",
+                resource_type:"video",chunk_size: 6000000,
+            });
             if(result){
                 lectureData.lecture.public_id=result.public_id 
                 lectureData.lecture.secure_url=result.secure_url 
@@ -177,4 +183,56 @@ message:"lecture created successfully "
 }
 
 
-export {addLectures,getAllCourses,getLecturesByCourseId,createCourse,updateCourse,removeCourse} 
+const removeLecture = async (req, res, next) => {
+    try {
+        const { courseId, lectureId } = req.query;
+        if (!courseId) {
+            return next(new AppError("Course ID is required", 400));
+        }
+        if (!lectureId) {
+            return next(new AppError("Lecture ID is required", 400));
+        }
+
+        const course = await Course.findById(courseId);
+        if (!course) {
+            return next(new AppError("Course not found", 404));
+        }
+
+        const lectureIndex = course.lectures.findIndex(
+            (lecture) => lecture._id.toString() === lectureId.toString()
+        );
+
+        if (lectureIndex === -1) {
+            return next(new AppError("Lecture not found", 404));
+        }
+
+        await cloudinary.v2.uploader.destroy(
+            course.lectures[lectureIndex].lecture.public_id,
+            {
+                resource_type: "video",
+            }
+        );
+
+        course.lectures.splice(lectureIndex, 1);
+        course.numberOfLectures = course.lectures.length;
+
+        await course.save();
+
+        res.status(200).json({
+            success: true,
+            message: "Lecture deleted successfully",
+        });
+    } catch (e) {
+        return next(new AppError(e.message, 500));
+    }
+};
+
+export {
+    addLectures,
+    getAllCourses,
+    getLecturesByCourseId,
+    createCourse,
+    updateCourse,
+    removeCourse,
+    removeLecture
+}; 
