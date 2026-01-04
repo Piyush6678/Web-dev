@@ -19,7 +19,7 @@ next()
 const authorizedRoles=(...roles)=>async(req,res,next)=>{
  
    const currentuserRoles=req.user.role;
-   console.log(currentuserRoles)
+  
     if(!roles.includes(currentuserRoles)){
 return next(
     new AppError("you dont have permission to access this route",401)

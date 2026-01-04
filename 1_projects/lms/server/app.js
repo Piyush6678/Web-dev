@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import userRouter from "./routes/user.routes.js";
 import paymentRouter from "./routes/payment.routes.js";
+import miscellaneousRouter from "./routes/miscellaneous.routes.js"; // Import
 import errorMiddelware from "./middlewares/error.middleware.js";
 import courseRouter from "./routes/course.routes.js";
 import {config} from "dotenv";
@@ -30,6 +31,7 @@ app.use("/ping",(req,res)=>{ // /ping/anything give pong message
 app.use("/api/v1/user",userRouter)
 app.use("/api/v1/courses",courseRouter)
 app.use("/api/v1/payments",paymentRouter)
+app.use("/api/v1", miscellaneousRouter); // Register
 
 
 
