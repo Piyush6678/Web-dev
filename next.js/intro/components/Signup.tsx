@@ -2,7 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { ChangeEventHandler, useState } from "react";
 
-export default function Signup() {
+export  function Signup() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const router = useRouter();
